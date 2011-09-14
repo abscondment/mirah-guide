@@ -3,13 +3,30 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical"
-              android:gravity="top|center_horizontal"
+              android:gravity="top|left"
               android:padding="20dp">
+  
+  <LinearLayout android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center">
 
-  <Button android:id="@+id/locate_btn"
-          android:text="Locate Me"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
+    <Button android:id="@+id/locate_btn"
+            android:text="Locate Me"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp" />
+    
+    <TextView android:text="Location:"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="3sp" />
+    <TextView android:id="@+id/current_location"
+              android:text="unknown"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+    
+  </LinearLayout>
   
 </LinearLayout>
 
