@@ -1,3 +1,5 @@
+package org.threebrothers
+
 import org.json.JSONObject
 
 class NearbyWikipediaEntry
@@ -15,7 +17,7 @@ class NearbyWikipediaEntry
     @id = long(json.optString('wikipediaUrl').hashCode)
     @title = json.optString 'title'
     @summary = json.optString 'summary'
-    @url = json.optString 'wikipediaUrl'
+    @url = String.format('http://%s', [json.optString('wikipediaUrl')].toArray)
     @thumbnail = json.optString 'thumbnailImg'
     @distance = float(json.optDouble 'distance')
     @latitude = float(json.optDouble 'lat')
