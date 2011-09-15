@@ -4,14 +4,6 @@
               android:layout_height="fill_parent"
               android:orientation="vertical"
               android:gravity="top|left">
-    
-  <TextView android:text="Nearby Things"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:lines="1"
-            android:ellipsize="end"
-            android:textSize="28sp" />
 
   <ListView android:id="@+id/list"
             android:layout_width="fill_parent"
