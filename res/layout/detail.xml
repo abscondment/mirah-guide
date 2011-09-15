@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:gravity="top|left"
+              android:padding="20dp">
+  <TextView android:id="@+id/detail_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:layout_marginBottom="15dp"
+            android:text="Title"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textSize="28sp" />
+  
+  <TextView android:id="@+id/detail_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="15dp"
+            android:text="Summary"
+            android:textSize="18dp" />
+
+  <LinearLayout android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+    <Button android:id="@+id/detail_map_btn"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="Open Map" />
+    
+    <Button android:id="@+id/detail_wikipedia_btn"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="Open Wikipedia" />
+  </LinearLayout>
+</LinearLayout>
