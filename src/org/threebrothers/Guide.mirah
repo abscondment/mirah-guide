@@ -1,10 +1,10 @@
 package org.threebrothers
 
 import android.app.Activity
+import android.content.Intent
 import android.util.Log
 
 import android.view.View
-import android.widget.Button
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
@@ -36,6 +36,18 @@ class Guide < Activity
     @list = ListView(findViewById R.id.list)
     @adapter = NearbyWikipediaAdapter.new self
     @list.setAdapter @adapter
+    @list.setOnItemClickListener do |parent, view, pos, id|
+      entry = NearbyWikipediaEntry(parent.getItemAtPosition pos)
+      intent = Intent.new(this, Detail.class)
+      
+      intent.putExtra 'title', entry.title
+      intent.putExtra 'summary', entry.summary
+      intent.putExtra 'url', entry.url
+      intent.putExtra 'latitude', entry.latitude
+      intent.putExtra 'longitude', entry.longitude
+      
+      this.startActivity intent
+    end
   end
 
   def onStart
