@@ -29,12 +29,12 @@ class Guide < Activity
     @locator = Locator.new self
   end
 
-  def onResume
+  def onStart
     super
     update_location
   end
 
-  def onPause
+  def onStop
     super
     @locator.stop
   end
