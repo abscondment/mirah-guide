@@ -40,8 +40,10 @@ class GeoNamesClient
 
   def find_nearby_wikipedia_json(loc:Location)
     Log.d 'GeoNamesClient', "Fetching for #{loc}"
-    url =  String.format '%s?username=%s&lat=%f&lng=%f', [self.endpoint, self.username,
-                                                          loc.getLatitude, loc.getLongitude].toArray
+    url =  String.format '%s?username=%s&lat=%f&lng=%f&maxRows=%d',
+                         [self.endpoint, self.username,
+                          loc.getLatitude, loc.getLongitude,
+                          25].toArray
     Log.d 'GeoNamesClient', "GET #{url}"
     req = HttpGet.new(url)
     AndroidHttpClient.modifyRequestToAcceptGzipResponse req
