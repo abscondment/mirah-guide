@@ -21,7 +21,7 @@ class Locator
 
     @update_interval_hint = long(60_000) # how often do we suggest polling?
     @min_distance = 10 # how close is close enough?
-    @max_distance = 1000 # how far do we let you move before refreshing?
+    @max_distance = 50 # how far do we let you move before refreshing?
   end
 
   def start:void
@@ -64,6 +64,7 @@ class Locator
         # still close and accuracy is worse - ignore altogether
         if (!loc.hasAccuracy) || (@location.hasAccuracy && @location.getAccuracy < loc.getAccuracy)
           Log.d tag(), "ignoring location: within max_distance of current and of worse accuracy"
+          @guide.stop_locating
           return
         else
           # we just haven't moved enough - save it, but don't refresh the guide
@@ -75,7 +76,11 @@ class Locator
     
     Log.d tag(), "new location: #{loc.getLatitude}, #{loc.getLongitude}; accuracy: #{loc.getAccuracy}"
     @location = loc
-    @guide.use_location @location unless skip_update
+    if skip_update
+      @guide.stop_locating
+    else
+      @guide.use_location @location
+    end
   end
 
   # We don't really care about provider-specific things

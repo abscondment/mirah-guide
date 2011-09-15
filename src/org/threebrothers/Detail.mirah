@@ -31,10 +31,12 @@ class Detail < Activity
       end
 
       map_btn.setOnClickListener do |v|
+        modified_title = intent.getStringExtra('title')
+        modified_title = modified_title.split('\\(')[0]
         uri = Uri.parse(String.format 'geo:0,0?q=%f,%f (%s)',
                         [intent.getFloatExtra('latitude', float(0.0)),
                          intent.getFloatExtra('longitude', float(0.0)),
-                         Uri.encode(intent.getStringExtra('title'))].toArray)
+                         Uri.encode(modified_title)].toArray)
         Log.d 'Detail', "#{uri}"
         this.startActivity Intent.new(Intent.ACTION_VIEW, uri)
       end

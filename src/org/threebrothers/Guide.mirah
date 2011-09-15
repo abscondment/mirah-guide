@@ -4,11 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 
+import android.app.ProgressDialog
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
 
 import android.location.Location
 
@@ -25,14 +25,6 @@ class Guide < Activity
 
     this = self # scoping
     
-    @locator = Locator.new self
-    @current_location = TextView(findViewById R.id.current_location)
-
-    @locate_btn = Button(findViewById R.id.locate_btn)
-    @locate_btn.setOnClickListener do |v|
-      this.update_location
-    end
-    
     @list = ListView(findViewById R.id.list)
     @adapter = NearbyWikipediaAdapter.new self
     @list.setAdapter @adapter
@@ -48,35 +40,41 @@ class Guide < Activity
       
       this.startActivity intent
     end
-  end
 
-  def onStart
-    super
-    update_location
+    @locator = Locator.new self
+    start_locating
   end
 
   def onStop
     super
-    @locator.stop
+    stop_locating
   end
 
-  def update_location
-    @locator.start
+  def onCreateOptionsMenu(menu)
+    getMenuInflater.inflate(R.menu.menu, menu)
+    true
+  end
+
+  def onOptionsItemSelected(item)
+    if item.getItemId == R.id.start_locating
+      start_locating
+      true
+    else
+      super item
+    end
   end
 
   def use_location(loc:Location)
     unless loc.nil?
-      @current_location.setText String.format('%.2f,%.2f (%.1f)', [loc.getLatitude,
-                                                                   loc.getLongitude,
-                                                                   loc.getAccuracy].toArray)
-      adapter = @adapter
+      this = self # scoping
+      adapter = @adapter # scoping
       handler = Handler.new do |message|
         if message.what == 200
           adapter.json = JSONObject(message.obj)
+          this.stop_locating
         end
         true
       end
-
       
       t = Thread.new do
         # fetch list for this location
@@ -87,6 +85,17 @@ class Guide < Activity
       end
       t.start
     end
+  end
+
+  def start_locating
+    @spinner.dismiss unless @spinner.nil?
+    @spinner = ProgressDialog.show self, String(nil), 'Loading...'
+    @locator.start
+  end
+
+  def stop_locating
+    @locator.stop
+    @spinner.dismiss unless @spinner.nil?
   end
   
 end
