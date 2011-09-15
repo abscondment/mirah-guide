@@ -1,6 +1,7 @@
 package org.threebrothers
 
 import android.app.Activity
+import android.util.Log
 
 import android.view.View
 import android.widget.Button
@@ -46,5 +47,11 @@ class Guide < Activity
     @current_location.setText String.format('%.2f,%.2f (%.1f)', [loc.getLatitude,
                                                                  loc.getLongitude,
                                                                  loc.getAccuracy].toArray)
+    t = Thread.new do
+      # fetch list for this location
+      json = GeoNamesClient.get.find_nearby_wikipedia_json loc
+      Log.d 'Guide', "got json: #{json}"
+    end
+    t.start
   end
 end
